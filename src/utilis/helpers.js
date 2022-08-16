@@ -1,3 +1,5 @@
+import axios from "axios";
+
  function slugify(text) {
     const from = "ãàáäâẽèéëêìíïîõòóöôùúüûñç·/_,:;"
     const to = "aaaaaeeeeeiiiiooooouuuunc------"
@@ -25,4 +27,36 @@ export const postDataF = (obj, n = [] )=> {
     }
   }
   return newObj
+}
+  
+export async function imageUpload(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  var config = {
+    method: 'post',
+    url: 'https://media-app.timeweb-gate.appx.uz/media/upload/ecommerce/image',
+      headers: {
+      Authorization:
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJsb2dpbiI6ImxvZ2luIiwicGFzc3dvcmQiOiJwYXNzd29yZCIsImlhdCI6MTY1NTM5Mzk3MH0.cAc26FC6h4vIjxYm9kYEnmVZykPZ_bHQZ9EQdflheps',
+    },
+    data: formData,
   }
+  return await axios(config).then((res) => {
+    console.log(res.data)
+    if (res.data.success) {
+      return res.data.data.file
+    }
+   }).catch((err)=> console.log(err))
+}
+
+export const postDataWarning={
+  name_uz: 'uzbekcha nomi',
+    name_ru: 'ruscha nomi',
+    description_uz: 'uzbekcha tasnifi',
+    description_ru: 'ruscha tasnifi',
+    price: 'narxi',
+    quantity: 'soni',
+    previous_price: 'avvalgi narxi',
+    images: 'rasmi',
+    category_id: 'kategoriyasi',
+}

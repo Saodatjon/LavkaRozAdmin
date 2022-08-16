@@ -41,7 +41,7 @@ function Attiributes() {
   const addAttributeValueRequest = usePostRequest({ url: attributeValueAdd.replace('id', attributeValue.parent_id), })
   
   const updateAttributeValueRequest = usePutRequest({url:attributeValueUpdate.replace('id', attributeValue.parent_id), })
-  const { response} = attributesLoad
+  const {loading, response} = attributesLoad
   const attributes = response && response?.attributes
   
   function handleChange({target}) {
@@ -95,7 +95,7 @@ function editBtnHandler(attribute, isValue) {
         name_uz:attribute.name_uz,
         name_ru:attribute.name_ru,
         slug: attribute.slug,
-        is_filterable:attribute.is_filterable,
+        is_filterable: attribute.is_filterable,
       })
       
     }
@@ -140,7 +140,7 @@ function editBtnHandler(attribute, isValue) {
       message.warning('Name uz kiritilmagan!')
     } else if (attributeValue.value_ru === '') {
       message.warning('Name ru kiritilmagan!')
-    } else if (attributeValue.parent_id === null) {
+    } else if (attributeValue.parent_id === null ) {
       message.warning('Parent  id kiritilmagan!')
     } else {
       const { success, response } = attributeValue.isEdit ? 
@@ -173,8 +173,7 @@ function editBtnHandler(attribute, isValue) {
             setDeleteModal({open: false, loading: false})
           }}>
       </Modal>
-      {
-        <FullPageLoader /> ? <h1>Loading...</h1> :
+      { loading ? <FullPageLoader />:
           <Space direction='vertical' size='large' style={{ width: '100%' }}>
             <Row justify='space-between'>
               <Col span={8}>
@@ -187,8 +186,8 @@ function editBtnHandler(attribute, isValue) {
                   <Space style={{
                     width: '100%',
                   }} direction='vertical'>
-                    <Input addonbefore='Name uz' name='name_uz' value={attribute.name_uz} onChange={(e) => handleChange(e)} />
-                    <Input addonbefore='Name ru' name='name_ru' value={attribute.name_uz} onChange={(e) => handleChange(e)} />
+                    <Input addonBefore='Name uz' name='name_uz' value={attribute.name_uz} onChange={(e) => handleChange(e)} />
+                    <Input addonBefore='Name ru' name='name_ru' value={attribute.name_ru} onChange={(e) => handleChange(e)} />
                     <Row justify='space-between'>
                       <Button
                         style={{ width: '48%' }}
@@ -223,12 +222,12 @@ function editBtnHandler(attribute, isValue) {
                       }
                     </Select>
                     <Input
-                      addonbefore='Value uz'
+                      addonBefore='Value uz'
                       name='value_uz'
                       value={attributeValue.value_uz}
                       onChange={(e) => handleValueChange(e)} />
                     <Input
-                      addonbefore='Value ru'
+                      addonBefore='Value ru'
                       name='value_ru'
                       value={attributeValue.value_ru} onChange={(e) => handleValueChange(e)} />
 

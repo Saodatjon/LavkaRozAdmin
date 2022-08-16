@@ -188,9 +188,8 @@ function Categories() {
           }}>
       </Modal>
       
-      {
-        <FullPageLoader/>? (
-          <h1>Loading...</h1>
+      { loading ? (
+          <FullPageLoader/>
         ) : (
           <Collapse >
               {
